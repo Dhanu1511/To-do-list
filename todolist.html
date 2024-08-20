@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-inline {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .form-control {
+            margin-right: 10px;
+        }
+
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        .btn-remove {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">My To-Do List</h1>
+        <form id="todo-form" class="form-inline mb-3">
+            <input type="text" id="todo-input" class="form-control" placeholder="Add new task" required>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+        <ul id="todo-list" class="list-group"></ul>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('todo-form');
+            const input = document.getElementById('todo-input');
+            const todoList = document.getElementById('todo-list');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const taskText = input.value.trim();
+                if (taskText === '') return;
+
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.innerHTML = `
+                    ${taskText} <button class="btn-remove">Remove</button>
+                `;
+
+                const removeButton = listItem.querySelector('.btn-remove');
+                removeButton.addEventListener('click', function () {
+                    todoList.removeChild(listItem);
+                });
+
+                todoList.appendChild(listItem);
+                input.value = '';
+                input.focus();
+            });
+        });
+    </script>
+</body>
+</html>
